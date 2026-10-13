@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS users (id TEXT PRIMARY KEY, google_subject TEXT UNIQUE NOT NULL, email TEXT UNIQUE NOT NULL, display_name TEXT NOT NULL, role TEXT NOT NULL DEFAULT 'student', created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP);
+CREATE TABLE IF NOT EXISTS opportunities (id TEXT PRIMARY KEY, title TEXT NOT NULL, company TEXT NOT NULL, type TEXT NOT NULL, location TEXT NOT NULL, mode TEXT NOT NULL, salary TEXT, description TEXT NOT NULL, tags_json TEXT NOT NULL DEFAULT '[]', status TEXT NOT NULL DEFAULT 'draft', created_by TEXT NOT NULL, created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP);
+CREATE TABLE IF NOT EXISTS courses (id TEXT PRIMARY KEY, title TEXT NOT NULL, provider TEXT NOT NULL, skill_tags_json TEXT NOT NULL DEFAULT '[]', duration TEXT, status TEXT NOT NULL DEFAULT 'published');
+CREATE TABLE IF NOT EXISTS applications (id TEXT PRIMARY KEY, user_id TEXT NOT NULL, opportunity_id TEXT NOT NULL, status TEXT NOT NULL DEFAULT 'submitted', applied_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP);
+CREATE INDEX IF NOT EXISTS idx_opportunities_status ON opportunities(status, created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_applications_user ON applications(user_id, applied_at DESC);
